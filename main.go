@@ -21,21 +21,28 @@ func main() {
 	m.Get("/", func(r render.Render) {
 
 		doc, err := goquery.NewDocument("http://www.ikea.com/ru/ru/catalog/allproducts/")
-        if err != nil {
-                log.Fatal(err)
-        }
+		if err != nil {
+				log.Fatal(err)
+		}
 
-        doc.Find(".productCategoryContainerWraper").Each(func(i int, s *goquery.Selection) {
-                fmt.Println(i)
-       
-                title := s.Find("a").Text()
-                link, _ := s.Find("a").Attr("href")
-                fmt.Println(title)
-                fmt.Println(link)
-        })
+		axilary := doc.Find(".rightContent")
+
+		axilary.Find(".header").Each(func(i int, s *goquery.Selection) {
+			//header := s.Text()
+		})
+
+		axilary.Find(".textContainer").Each(func(i int, s *goquery.Selection) {
+			s.Find("a").Each(func(j int, t *goquery.Selection) {
+				//title := t.Text()
+			})
+
+			s.Find("a").Each(func(j int, t *goquery.Selection) {
+				//url, _ := s.Attr("href")
+			})
+		})	
 
 		r.HTML(http.StatusOK, "index", nil)	
 	})
 
-	m.RunOnAddr(":8094")
+	m.RunOnAddr(":8095")
 }
